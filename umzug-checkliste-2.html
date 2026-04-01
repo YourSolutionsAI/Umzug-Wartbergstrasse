@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umzugs-Checkliste · Moltkestraße → Wartbergstraße</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f6f2ec;--bg-warm:#ede7dd;--surface:#fff;--ink:#1b2a3d;--ink-soft:#5a6a7a;--ink-muted:#94a1af;
+  --accent-deep:#1b3a4b;--accent-teal:#0d7c66;--accent-teal-soft:#e6f5f1;
+  --accent-gold:#c8963e;--accent-gold-soft:#fdf5e8;--accent-plum:#6c3461;--accent-plum-soft:#f5eaf3;
+  --accent-rust:#b44d2d;--accent-rust-soft:#fceee8;--accent-slate:#3d5467;--accent-slate-soft:#eaeff3;
+  --accent-forest:#1e8449;--accent-forest-soft:#eafaf1;--accent-indigo:#34495e;--accent-indigo-soft:#ebeef2;
+  --accent-wine:#7b2d52;--accent-wine-soft:#f5e8ef;
+  --border:#e2dbd1;--radius:12px;
+  --shadow:0 1px 3px rgba(27,42,61,.06),0 6px 24px rgba(27,42,61,.04);
+  --shadow-lg:0 4px 12px rgba(27,42,61,.08),0 16px 48px rgba(27,42,61,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");z-index:9999}
+.container{max-width:780px;margin:0 auto;padding:0 20px 60px}
+.header{background:linear-gradient(135deg,var(--accent-deep) 0%,#0f2630 55%,var(--accent-teal) 100%);padding:36px 24px 28px;color:#fff;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;bottom:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(13,124,102,.15)}
+.header-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.header h1{font-family:'Fraunces',serif;font-weight:800;font-size:2rem;letter-spacing:-.5px;line-height:1.1}
+.header .route{margin-top:6px;font-size:.9rem;opacity:.85;font-weight:300;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.header .route .arrow{display:inline-block;width:28px;height:2px;background:var(--accent-teal);position:relative;border-radius:1px}
+.header .route .arrow::after{content:'';position:absolute;right:-1px;top:-3px;border:solid var(--accent-teal);border-width:0 2px 2px 0;padding:3px;transform:rotate(-45deg)}
+.header .people{font-size:.8rem;opacity:.5;margin-top:4px;font-style:italic}
+.timeline-banner{max-width:780px;margin:0 auto;padding:0 20px}
+.timeline-strip{background:var(--surface);border-radius:0 0 var(--radius) var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;overflow-x:auto}
+.tl-item{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:70px;text-align:center}
+.tl-dot{width:12px;height:12px;border-radius:50%;position:relative}
+.tl-dot::before{content:'';position:absolute;right:-40px;top:50%;width:34px;height:2px;background:var(--border)}
+.tl-item:last-child .tl-dot::before{display:none}
+.tl-date{font-size:.72rem;font-weight:700;color:var(--ink)}
+.tl-label{font-size:.63rem;color:var(--ink-muted);line-height:1.2;max-width:85px}
+.tl-overlap{font-size:.63rem;color:var(--accent-forest);font-weight:600;background:var(--accent-forest-soft);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.progress-section{max-width:780px;margin:16px auto 0;padding:0 20px}
+.progress-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:20px 24px;display:flex;align-items:center;gap:20px}
+.progress-ring-wrap{position:relative;flex-shrink:0}
+.progress-ring{transform:rotate(-90deg)}
+.progress-ring-bg{fill:none;stroke:var(--border);stroke-width:6}
+.progress-ring-fill{fill:none;stroke:url(#progressGrad);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
+.progress-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.progress-pct{font-weight:800;font-size:1.3rem;color:var(--accent-teal);line-height:1}
+.progress-info{flex:1}
+.progress-label{font-weight:600;font-size:.95rem}
+.progress-sub{font-size:.8rem;color:var(--ink-muted);margin-top:2px}
+.progress-bar-wrap{margin-top:10px;height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-teal),var(--accent-gold));border-radius:3px;transition:width .6s ease}
+.filter-bar{margin-top:20px}
+.search-box{position:relative;margin-bottom:12px}
+.search-box input{width:100%;padding:11px 16px 11px 40px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:.9rem;background:var(--surface);color:var(--ink);outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:var(--accent-teal)}
+.search-box .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:.85rem;opacity:.4}
+.search-box .clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--ink-muted);display:none}
+.search-box.has-value .clear{display:block}
+.cat-pills{display:flex;flex-wrap:wrap;gap:6px}
+.cat-pill{padding:5px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-family:'Outfit',sans-serif;font-size:.73rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .15s;white-space:nowrap}
+.cat-pill:hover{border-color:var(--accent-teal);color:var(--accent-teal)}
+.cat-pill.active{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep)}
+.phase{margin-top:16px;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;animation:fadeSlideUp .4s ease both}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phase-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s;border:none;background:none;width:100%;font-family:'Outfit',sans-serif;color:var(--ink);text-align:left}
+.phase-header:hover{background:rgba(0,0,0,.015)}
+.phase-header-left{display:flex;align-items:center;gap:12px}
+.phase-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.phase-title{font-weight:700;font-size:.95rem}
+.phase-dates{font-size:.7rem;color:var(--accent-teal);font-weight:500;margin-top:1px}
+.phase-count{font-size:.72rem;color:var(--ink-muted);margin-top:1px}
+.phase-header-right{display:flex;align-items:center;gap:12px}
+.phase-mini-bar{width:56px;height:4px;border-radius:2px;background:var(--bg-warm);overflow:hidden}
+.phase-mini-bar-fill{height:100%;border-radius:2px;transition:width .5s ease}
+.phase-chevron{font-size:1rem;color:var(--ink-muted);transition:transform .25s ease;line-height:1}
+.phase.open .phase-chevron{transform:rotate(180deg)}
+.phase.done .phase-header{background:var(--accent-forest-soft)}
+.phase-body{display:none;border-top:1px solid var(--bg-warm)}
+.phase.open .phase-body{display:block}
+.phase-hint{margin:12px 20px;padding:10px 14px;background:var(--accent-gold-soft);border-left:3px solid var(--accent-gold);border-radius:0 8px 8px 0;font-size:.78rem;color:#7a6022;line-height:1.45}
+.phase-hint.teal{background:var(--accent-teal-soft);border-left-color:var(--accent-teal);color:#0a5c4d}
+.phase-hint.rust{background:var(--accent-rust-soft);border-left-color:var(--accent-rust);color:#7a3218}
+.phase-hint.forest{background:var(--accent-forest-soft);border-left-color:var(--accent-forest);color:#145a30}
+.task{display:flex;align-items:flex-start;gap:12px;padding:13px 20px 13px 24px;border-bottom:1px solid #f7f3ee;cursor:pointer;transition:background .15s,opacity .2s}
+.task:last-child{border-bottom:none}
+.task:hover{background:rgba(0,0,0,.012)}
+.task.checked{opacity:.5}
+.task-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.task.checked .task-check{border-color:var(--accent-teal);background:var(--accent-teal)}
+.task-check svg{opacity:0;transition:opacity .15s}
+.task.checked .task-check svg{opacity:1}
+.task-content{flex:1;min-width:0}
+.task-text{font-size:.88rem;line-height:1.45}
+.task.checked .task-text{text-decoration:line-through;color:var(--ink-muted)}
+.task-meta{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap}
+.task-cat{display:inline-block;font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.task-deadline{font-size:.66rem;font-weight:500;color:var(--accent-rust);background:var(--accent-rust-soft);padding:2px 7px;border-radius:4px;white-space:nowrap}
+.task-actions{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center}
+.task-action-btn{font-size:.7rem;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--ink-soft);cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.task-action-btn:hover{border-color:var(--accent-teal);color:var(--accent-teal)}
+.task-note-display{margin-top:6px;padding:8px 12px;background:var(--accent-gold-soft);border-radius:8px;font-size:.78rem;color:#6b5518;line-height:1.4;white-space:pre-wrap;position:relative;cursor:default}
+.task-note-display .note-del{position:absolute;top:4px;right:8px;background:none;border:none;cursor:pointer;font-size:.7rem;color:var(--ink-muted);opacity:.5}
+.task-note-display .note-del:hover{opacity:1;color:var(--accent-rust)}
+.task-images{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;cursor:default}
+.task-img-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;border:2px solid var(--border);cursor:pointer;transition:all .15s}
+.task-img-thumb:hover{border-color:var(--accent-teal);transform:scale(1.05)}
+.img-remove{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--accent-rust);color:#fff;border:none;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}
+.img-wrap{position:relative;display:inline-block}
+.img-wrap:hover .img-remove{opacity:1}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100000;display:none;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.active{display:flex}
+.lightbox img{max-width:92vw;max-height:90vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.note-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100001;display:none;align-items:center;justify-content:center;padding:20px}
+.note-modal-overlay.active{display:flex}
+.note-modal{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:24px;width:100%;max-width:480px}
+.note-modal h3{font-size:1rem;margin-bottom:12px;color:var(--ink)}
+.note-modal textarea{width:100%;height:120px;border:1.5px solid var(--border);border-radius:10px;padding:12px;font-family:'Outfit',sans-serif;font-size:.88rem;resize:vertical;outline:none;color:var(--ink)}
+.note-modal textarea:focus{border-color:var(--accent-teal)}
+.note-modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.note-modal-btns button{padding:8px 20px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.85rem;cursor:pointer;border:none;transition:all .15s}
+.note-save{background:var(--accent-teal);color:#fff}.note-save:hover{background:#0a6652}
+.note-cancel{background:var(--bg-warm);color:var(--ink-soft)}.note-cancel:hover{background:var(--border)}
+.footer{margin-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-text{font-size:.75rem;color:var(--ink-muted)}
+.footer-btns{display:flex;gap:8px;flex-wrap:wrap}
+.reset-btn,.export-btn{padding:8px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:.8rem;color:var(--ink-muted);cursor:pointer;transition:all .15s}
+.reset-btn:hover{border-color:var(--accent-rust);color:var(--accent-rust)}
+.export-btn:hover{border-color:var(--accent-teal);color:var(--accent-teal)}
+@media(max-width:600px){
+  .header{padding:24px 16px 20px}.header h1{font-size:1.5rem}
+  .timeline-strip{padding:12px 14px;gap:4px}.tl-item{min-width:55px}.tl-dot::before{width:20px;right:-24px}
+  .progress-card{flex-direction:column;text-align:center;gap:12px}
+  .task{padding:11px 16px 11px 20px}
+  .cat-pills{gap:4px}.cat-pill{font-size:.68rem;padding:4px 9px}
+}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.confetti-piece{position:fixed;top:0;width:8px;height:8px;z-index:100002;pointer-events:none;border-radius:2px}
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0"><defs><linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0d7c66"/><stop offset="100%" stop-color="#c8963e"/></linearGradient></defs></svg>
+<div class="header"><div class="header-inner">
+  <h1>Umzugs-Checkliste</h1>
+  <div class="route">Moltkestraße 10 <span class="arrow"></span> Wartbergstraße 8.1, Heilbronn</div>
+  <div class="people">Jonas & Jana · Umzug 02./03.05.2026 · Mietfrei wohnen bis 30.06.2026</div>
+</div></div>
+<div class="timeline-banner"><div class="timeline-strip">
+  <div class="tl-item"><div class="tl-date">Heute</div><div class="tl-dot" style="background:var(--accent-deep)"></div><div class="tl-label">Planung starten</div></div>
+  <div class="tl-item"><div class="tl-date">01.05.</div><div class="tl-dot" style="background:var(--accent-teal)"></div><div class="tl-label">Mietbeginn Wartbergstr.</div></div>
+  <div class="tl-item"><div class="tl-date">02./03.05.</div><div class="tl-dot" style="background:var(--accent-gold)"></div><div class="tl-label">Umzugstag</div></div>
+  <div class="tl-item"><div class="tl-overlap">Mietfrei Mai + Juni</div></div>
+  <div class="tl-item"><div class="tl-date">30.06.</div><div class="tl-dot" style="background:var(--accent-rust)"></div><div class="tl-label">Übergabe Moltkestr.</div></div>
+</div></div>
+<div class="progress-section"><div class="progress-card">
+  <div class="progress-ring-wrap">
+    <svg class="progress-ring" width="72" height="72" viewBox="0 0 72 72"><circle class="progress-ring-bg" cx="36" cy="36" r="30"/><circle class="progress-ring-fill" id="ringFill" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg>
+    <div class="progress-center"><span class="progress-pct" id="pctText">0%</span></div>
+  </div>
+  <div class="progress-info">
+    <div class="progress-label" id="progressLabel">0 von 0 erledigt</div>
+    <div class="progress-sub" id="progressSub">Los geht's!</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+  </div>
+</div></div>
+<div class="container">
+  <div class="filter-bar">
+    <div class="search-box" id="searchBox"><span class="icon">🔍</span><input type="text" id="searchInput" placeholder="Aufgabe suchen…"><button class="clear" id="searchClear">✕</button></div>
+    <div class="cat-pills" id="catPills"></div>
+  </div>
+  <div id="phaseList"></div>
+  <div class="footer">
+    <div class="footer-btns"><button class="reset-btn" id="resetBtn">↺ Zurücksetzen</button><button class="export-btn" id="exportBtn">📋 Zusammenfassung kopieren</button></div>
+    <span class="footer-text">Moltkestr. 10 → Wartbergstr. 8.1 · Mietfrei bis 30.06.</span>
+  </div>
+</div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><img id="lightboxImg" src="" alt=""></div>
+<div class="note-modal-overlay" id="noteModal"><div class="note-modal">
+  <h3 id="noteModalTitle">Notiz</h3>
+  <textarea id="noteTextarea" placeholder="Notiz eingeben…"></textarea>
+  <div class="note-modal-btns"><button class="note-cancel" onclick="closeNoteModal()">Abbrechen</button><button class="note-save" onclick="saveNote()">Speichern</button></div>
+</div></div>
+<input type="file" id="imgUpload" accept="image/*" multiple style="display:none">
+
+<script>
+var PHASES=[
+{id:"phase1",label:"Sofort – Anfang April",icon:"📋",color:"var(--accent-deep)",soft:"var(--accent-slate-soft)",fill:"#1b3a4b",dates:"Jetzt bis ~10. April",hint:null,tasks:[
+{id:"p1",text:"Mietvertrag Wartbergstraße 8.1 prüfen & unterschreiben",cat:"Vertrag"},
+{id:"p2",text:"Vereinbarung mietfreies Wohnen Moltkestraße bis 30.06.2026 schriftlich fixieren",cat:"Vertrag",deadline:"Schriftlich!"},
+{id:"p3",text:"Übergabetermin Moltkestraße mit Vermieter vereinbaren (Ende Juni)",cat:"Vertrag"},
+{id:"p4",text:"Umzugstermin: Sa/So 02./03.05.2026",cat:"Planung"},
+{id:"p5",text:"Umzugsunternehmen beauftragen für große Möbel: Angebote einholen (Bett, Sofa, Schränke, Waschmaschine, Kühlschrank)",cat:"Planung",deadline:"Mind. 3 Angebote!"},
+{id:"p6",text:"Eigenen Transporter / Anhänger für Kleinzeug organisieren (Sixt, Starcar, Bekannte)",cat:"Planung"},
+{id:"p7",text:"Jana: Sonderurlaub bei RECARO für 02./03.05. + ggf. Mo 04.05.",cat:"Planung"},
+{id:"p8",text:"Eigene Kundentermine am Umzugswochenende blocken (VVRB, Warsteiner)",cat:"Planung"},
+{id:"p9",text:"Grundriss Wartbergstraße besorgen & Möbelplanung starten – alle Räume ausmessen",cat:"Planung"},
+{id:"p10",text:"Bestandsaufnahme: Was wird mitgenommen, was verkauft/verschenkt/entsorgt?",cat:"Vorbereitung"},
+{id:"p11",text:"eBay Kleinanzeigen: Nicht benötigte Möbel/Sachen einstellen",cat:"Vorbereitung"},
+{id:"p12",text:"Halteverbotszone Wartbergstraße 8.1 für 02.05. beantragen (Stadt Heilbronn)",cat:"Behörden",deadline:"Min. 14 Tage vorher!"},
+{id:"p13",text:"Halteverbotszone Moltkestraße 10 für 02.05. beantragen",cat:"Behörden",deadline:"Min. 14 Tage vorher!"},
+{id:"p14",text:"Umzugskartons, Packpapier, Luftpolsterfolie, Klebeband, Edding besorgen",cat:"Vorbereitung"},
+{id:"p15",text:"Neue Möbel bestellen falls nötig (Lieferzeit beachten – bis 01.05. da?)",cat:"Planung"},
+{id:"p16",text:"Umzugshelfer für Kleinzeug-Fahrten anfragen (Freunde, Familie)",cat:"Planung"},
+]},
+{id:"phase2",label:"Neue Verträge & Kündigungen",icon:"⚡",color:"var(--accent-teal)",soft:"var(--accent-teal-soft)",fill:"#0d7c66",dates:"Sofort bis Mitte April",
+hint:{text:"Alle Versorger-Verträge werden NEU für Wartbergstraße abgeschlossen. Moltkestraße-Verträge zum 30.06. kündigen. Sonderkündigungsrecht bei Umzug prüfen! Zähler-Nr. der neuen Wohnung vorher besorgen.",type:"teal"},tasks:[
+{id:"v1",text:"Stromanbieter vergleichen (Check24/Verivox) & Vertrag ab 01.05. Wartbergstraße",cat:"Versorger",deadline:"3–4 Wochen vorher"},
+{id:"v2",text:"Strom Moltkestraße kündigen zum 30.06. (Kündigungsfrist + Sonderkündigungsrecht prüfen)",cat:"Kündigung",deadline:"Frist beachten"},
+{id:"v3",text:"Gasanbieter vergleichen & Vertrag ab 01.05. Wartbergstraße",cat:"Versorger",deadline:"3–4 Wochen vorher"},
+{id:"v4",text:"Gas Moltkestraße kündigen zum 30.06.",cat:"Kündigung",deadline:"Frist beachten"},
+{id:"v5",text:"Internet: Glasfaser-Verfügbarkeit Wartbergstraße checken! Anbieter vergleichen & Vertrag ab 01.05.",cat:"Versorger",deadline:"4–6 Wochen vorher!"},
+{id:"v6",text:"Internet-Techniker-Termin für Wartbergstraße reservieren (01./02.05.)",cat:"Versorger",deadline:"Sofort mitbuchen!"},
+{id:"v7",text:"Internet Moltkestraße kündigen (Sonderkündigungsrecht bei Umzug? Sonst 3 Monate Frist!)",cat:"Kündigung",deadline:"Vertrag prüfen!"},
+{id:"v8",text:"Mobilfunk-Vertrag: Adressänderung melden",cat:"Versorger"},
+{id:"v9",text:"Wasser: Ab-/Anmeldung bei Versorgung Heilbronn (HNVG)",cat:"Versorger"},
+{id:"v10",text:"Zählernummern Wartbergstraße notieren: Strom, Gas, Wasser (für Vertragsabschluss)",cat:"Versorger",deadline:"Bei Besichtigung!"},
+]},
+{id:"phase3",label:"Ummeldungen & Versicherungen",icon:"📬",color:"var(--accent-plum)",soft:"var(--accent-plum-soft)",fill:"#6c3461",dates:"2–3 Wochen vorher",hint:null,tasks:[
+{id:"s1",text:"Nachsendeauftrag Post: Moltkestr. 10 → Wartbergstr. 8.1, ab 01.05.",cat:"Behörden"},
+{id:"s2",text:"GEZ (Rundfunkbeitrag): Adresse ab 01.05. ändern",cat:"Behörden"},
+{id:"s3",text:"Hausratversicherung: Umzugstransport mitversichert? Adresse + Wohnfläche anpassen",cat:"Versicherung",deadline:"Deckung prüfen!"},
+{id:"s4",text:"Private Haftpflicht: Adressänderung",cat:"Versicherung"},
+{id:"s5",text:"Kfz-Versicherung Mercedes E-Coupé: Adressänderung",cat:"Versicherung"},
+{id:"s6",text:"ADAC: Adresse ändern",cat:"Versicherung"},
+{id:"s7",text:"Krankenkasse: Adressänderung",cat:"Versicherung"},
+{id:"s8",text:"BU-/Unfallversicherung: Adresse ändern (falls vorhanden)",cat:"Versicherung"},
+{id:"s9",text:"Rechtsschutzversicherung: Adressänderung (falls vorhanden)",cat:"Versicherung"},
+{id:"s10",text:"Bank(en): Adresse ändern – Privat + YourSolutions Geschäftskonto",cat:"Finanzen"},
+{id:"s11",text:"PayPal, Klarna, Amazon Pay: Rechnungsadresse aktualisieren",cat:"Finanzen"},
+{id:"s12",text:"Finanzamt Heilbronn: Neue Adresse für Freiberufler-Tätigkeit",cat:"Finanzen"},
+{id:"s13",text:"Steuerberater Muth Treuhand: Neue Geschäftsadresse mitteilen",cat:"Finanzen"},
+]},
+{id:"phase4",label:"Packen & Vorbereiten",icon:"📦",color:"var(--accent-gold)",soft:"var(--accent-gold-soft)",fill:"#c8963e",dates:"Ab ~18. April",
+hint:{text:"System beim Packen: Kartons nummerieren + Inventarliste (Handy-Notiz reicht). Farb-Aufkleber pro Zielraum. Kleinkram in Zip-Beutel. Schwere Sachen in kleine Kartons, leichte in große!",type:""},tasks:[
+{id:"k1",text:"Schlüssel Wartbergstraße abholen / Vorab-Begehung",cat:"Wohnung"},
+{id:"k2",text:"Wartbergstraße: Fotos vom Ist-Zustand machen (Dokumentation vor Einzug!)",cat:"Wohnung",deadline:"Vor Einzug!"},
+{id:"k3",text:"Handwerker Wartbergstraße: Lampen, Bohren, Einbauten",cat:"Wohnung"},
+{id:"k4",text:"Packen starten: Deko, Bücher, Saisonkleidung, selten Genutztes zuerst",cat:"Packen"},
+{id:"k5",text:"Kartons beschriften: Zielraum + Inhalt + Priorität (1–3)",cat:"Packen"},
+{id:"k6",text:"Inventarliste: Karton-Nr. → Inhalt (Handy-Notiz/Excel)",cat:"Packen"},
+{id:"k7",text:"Badezimmer-Box packen (letztes Packen, erstes Auspacken)",cat:"Packen"},
+{id:"k8",text:"Küchen-Erstausstattungs-Box: Wasserkocher, Kaffee, Tassen, Besteck, Teller",cat:"Packen"},
+{id:"k9",text:"Gardinen/Vorhänge abhängen – Maße für neue Wohnung prüfen",cat:"Packen"},
+{id:"k10",text:"Möbel zerlegen: Regalböden raus, Schubladen sichern, Schrauben in beschrifteten Tüten",cat:"Packen"},
+{id:"k11",text:"Bilder & Spiegel: Ecken polstern, aufrecht transportieren",cat:"Packen"},
+{id:"k12",text:"Pflanzen-Transport planen: Empfindliche Pflanzen schützen",cat:"Packen"},
+]},
+{id:"phase5",label:"Letzte Woche vor Umzug",icon:"🔧",color:"var(--accent-rust)",soft:"var(--accent-rust-soft)",fill:"#b44d2d",dates:"26.04.–01.05.",hint:null,tasks:[
+{id:"w1",text:"ProArt 5K Monitor sicher verpacken: Originalkarton oder Decken + Schaumstoff",cat:"IT/Büro"},
+{id:"w2",text:"ROG OLED 4K Monitor sicher verpacken",cat:"IT/Büro"},
+{id:"w3",text:"RTX 5070 Ti Desktop: GPU ausbauen oder fixieren, Seitenteil polstern",cat:"IT/Büro"},
+{id:"w4",text:"iDock C10 KVM-Switch, Peripherie, Webcam einpacken & beschriften",cat:"IT/Büro"},
+{id:"w5",text:"Netzwerk-Equipment separat einpacken: Router, Switches, Patchkabel",cat:"IT/Büro"},
+{id:"w6",text:"Backup: NAS, Cloud, externe Festplatte – doppelt sichern!",cat:"IT/Büro"},
+{id:"w7",text:"Kühlschrank abtauen: Mind. 24h vorher Strom ziehen, Tür offen",cat:"Vorbereitung"},
+{id:"w8",text:"Waschmaschine: Restwasser ablassen, Transportsicherung einbauen",cat:"Vorbereitung"},
+{id:"w9",text:"Spülmaschine: Restwasser ablassen, Schläuche abklemmen",cat:"Vorbereitung"},
+{id:"w10",text:"Werkzeugkiste: Bohrmaschine, Akkuschrauber, Bits, Dübel, Maßband, Wasserwaage, Cutter",cat:"Vorbereitung"},
+{id:"w11",text:"Dokumente & Wertsachen in separate Tasche – selbst transportieren",cat:"Vorbereitung"},
+{id:"w12",text:"Medikamente & Erste-Hilfe-Set griffbereit halten",cat:"Vorbereitung"},
+{id:"w13",text:"Verpflegung: Wasser, Bier, Snacks, Pizza vorbestellen",cat:"Planung"},
+{id:"w14",text:"Erste-Nacht-Box: Bettwäsche, Kissen, Handtücher, Ladekabel, Medikamente, Kaffee, Taschenlampe",cat:"Planung"},
+{id:"w15",text:"Putzmittel-Box Wartbergstraße: Allzweckreiniger, Lappen, Müllbeutel, Klopapier",cat:"Planung"},
+{id:"w16",text:"Umzugsunternehmen: Termin & Details rückbestätigen (Uhrzeit, Adresse, Etage, Aufzug?)",cat:"Planung",deadline:"Rückbestätigung!"},
+{id:"w17",text:"Nachbarn Moltkestraße verabschieden",cat:"Soziales"},
+{id:"w18",text:"Handyakkus voll laden, Powerbank laden",cat:"Vorbereitung"},
+]},
+{id:"phase6",label:"Umzugswochenende 02./03.05.",icon:"🚚",color:"var(--accent-wine)",soft:"var(--accent-wine-soft)",fill:"#7b2d52",dates:"Sa 02. + So 03.05.2026",
+hint:{text:"Moltkestraße bleibt mietfrei bis 30.06. – null Stress! Fokus: Alle Möbel (Umzugsunternehmen) + Alltagssachen rüber. Restsachen & Renovierung habt ihr 2 Monate Zeit.",type:"forest"},tasks:[
+{id:"d1",text:"Zählerstände ablesen: Strom, Gas, Wasser – Wartbergstraße (Einzug)",cat:"Wohnung",deadline:"01.05. oder 02.05. früh"},
+{id:"d2",text:"Umzugsunternehmen empfangen & einweisen: Welche Möbel, welcher Raum",cat:"Umzug"},
+{id:"d3",text:"Kartons nach Raum-Beschriftung einsortieren lassen",cat:"Umzug"},
+{id:"d4",text:"Monitore, Desktop-PC, empfindliche Geräte SELBST im Mercedes transportieren",cat:"IT/Büro"},
+{id:"d5",text:"Mercedes E-Coupé: An beiden Adressen Parkplatz freihalten",cat:"Umzug"},
+{id:"d6",text:"Kleinzeug mit eigenem Auto / Transporter in mehreren Fahrten rüberbringen",cat:"Umzug"},
+{id:"d7",text:"Priorität Tag 1: Bett(en), Kühlschrank, Waschmaschine aufstellen",cat:"Umzug"},
+{id:"d8",text:"Priorität Tag 2: Schreibtisch, Kleiderschrank, Küche einrichten",cat:"Umzug"},
+{id:"d9",text:"Kühlschrank nach 2–4h Ruhezeit einschalten",cat:"Umzug"},
+{id:"d10",text:"Waschmaschine anschließen – Transportsicherung entfernen!",cat:"Umzug"},
+{id:"d11",text:"Internet-Router anschließen",cat:"IT/Büro"},
+{id:"d12",text:"Rauchmelder in der neuen Wohnung testen",cat:"Wohnung"},
+{id:"d13",text:"Wasserhähne, Toilette, Dusche testen – Undichtigkeiten?",cat:"Wohnung"},
+{id:"d14",text:"Heizung: Heizkörper aufdrehen, entlüften falls nötig",cat:"Wohnung"},
+{id:"d15",text:"Steckdosen prüfen: Funktionieren alle?",cat:"Wohnung"},
+{id:"d16",text:"Fenster & Türen: Schließen und Öffnen problemlos?",cat:"Wohnung"},
+{id:"d17",text:"Erste-Nacht-Box auspacken – ankommen & durchatmen 🍕",cat:"Umzug"},
+{id:"d18",text:"Umzugsunternehmen: Abnahme, Rechnung, ggf. Schadensmeldung",cat:"Umzug"},
+]},
+{id:"phase7",label:"Erste Woche – Wartbergstraße",icon:"🏠",color:"var(--accent-forest)",soft:"var(--accent-forest-soft)",fill:"#1e8449",dates:"04.–11.05.2026",
+hint:{text:"Wohnsitz innerhalb 14 Tagen ummelden! Frist läuft ab 01.05. → Bürgerbüro-Termin sofort buchen.",type:"rust"},tasks:[
+{id:"a1",text:"Wohnsitz ummelden: Bürgerbüro Heilbronn (Online-Termin!)",cat:"Behörden",deadline:"Bis 15.05.!"},
+{id:"a2",text:"Personalausweis: Adresse aktualisieren",cat:"Behörden"},
+{id:"a3",text:"Reisepass: Adresse aktualisieren",cat:"Behörden"},
+{id:"a4",text:"Kfz-Zulassungsstelle: Fahrzeugschein Mercedes E-Coupé",cat:"Behörden"},
+{id:"a5",text:"Gewerbe-/Freiberuflermeldung: Neue Adresse Finanzamt Heilbronn",cat:"Behörden"},
+{id:"a6",text:"yoursolutions.ai: Impressum & Geschäftsadresse aktualisieren",cat:"Business"},
+{id:"a7",text:"YourSolutions Branding-Dokumente, Rechnungsvorlage: Neue Adresse",cat:"Business"},
+{id:"a8",text:"Claude-Skill yoursolutions-branding: Adressdaten aktualisieren",cat:"Business"},
+{id:"a9",text:"Kunden informieren: VVRB (Herr Magerkurth), Warsteiner",cat:"Business"},
+{id:"a10",text:"Freelancer-Profile: Freelancermap, Malt, Freelance.de, GULP",cat:"Business"},
+{id:"a11",text:"LinkedIn, Xing: Standort aktualisieren",cat:"Business"},
+{id:"a12",text:"Google My Business / Maps: Geschäftsadresse ändern",cat:"Business"},
+{id:"a13",text:"Workstation aufbauen: ProArt 5K + ROG OLED 4K + iDock C10 + RTX 5070 Ti",cat:"IT/Büro"},
+{id:"a14",text:"Kabelmanagement: Schreibtisch sauber verkabeln",cat:"IT/Büro"},
+{id:"a15",text:"Netzwerk: WLAN, ggf. Mesh-Setup, Speedtest",cat:"IT/Büro"},
+{id:"a16",text:"Drucker/Scanner einrichten (falls vorhanden)",cat:"IT/Büro"},
+{id:"a17",text:"Briefkasten beschriften: Dahlmeyer / Boucek",cat:"Wohnung"},
+{id:"a18",text:"Klingelschild beschriften / beim Vermieter anfragen",cat:"Wohnung"},
+{id:"a19",text:"Nachbarn Wartbergstraße vorstellen",cat:"Soziales"},
+{id:"a20",text:"Schlüsselkopien anfertigen lassen (falls nötig)",cat:"Wohnung"},
+]},
+{id:"phase8",label:"Mai & Juni – Renovierung Moltke",icon:"🎨",color:"var(--accent-indigo)",soft:"var(--accent-indigo-soft)",fill:"#34495e",dates:"Mai – Ende Juni 2026",
+hint:{text:"Ihr wohnt mietfrei bis 30.06. – 2 Monate stressfrei für Renovierung, Restsachen und Endreinigung. Mietvertrag genau prüfen: Was schuldet ihr an Schönheitsreparaturen? Im Zweifel Vermieter direkt fragen!",type:"teal"},tasks:[
+{id:"r1",text:"Mietvertrag prüfen: Welche Schönheitsreparaturen sind geschuldet? (Klausel wirksam?)",cat:"Renovierung",deadline:"Genau lesen!"},
+{id:"r2",text:"Absprache mit Vermieter: Erwartungen an Übergabezustand klären",cat:"Renovierung"},
+{id:"r3",text:"Bestandsaufnahme: Welche Räume müssen gestrichen werden? Fotos machen!",cat:"Renovierung"},
+{id:"r4",text:"Entscheidung: Selbst streichen ODER Maler beauftragen",cat:"Renovierung"},
+{id:"r5",text:"Falls Maler: Angebote einholen (mind. 2–3), Termin vereinbaren",cat:"Renovierung"},
+{id:"r6",text:"Falls selbst: Material besorgen – Wandfarbe weiß, Rollen, Teleskopstange, Abdeckfolie, Kreppband",cat:"Renovierung"},
+{id:"r7",text:"Dübellöcher, Bohrlöcher, Risse verspachteln & schleifen",cat:"Renovierung"},
+{id:"r8",text:"Wände streichen (ggf. 2 Anstriche nötig)",cat:"Renovierung"},
+{id:"r9",text:"Silikonfugen Bad/Küche prüfen – ggf. erneuern",cat:"Renovierung"},
+{id:"r10",text:"Restsachen aus Moltke in die Wartbergstraße bringen",cat:"Umzug"},
+{id:"r11",text:"Sperrmüll-Termin Stadt Heilbronn beantragen (falls nötig)",cat:"Entsorgung"},
+{id:"r12",text:"Elektromüll / Altgeräte zum Wertstoffhof bringen",cat:"Entsorgung"},
+{id:"r13",text:"Fenster putzen (innen + außen)",cat:"Reinigung"},
+{id:"r14",text:"Backofen & Herd gründlich reinigen",cat:"Reinigung"},
+{id:"r15",text:"Bad: Fugen, Armaturen, Abflüsse, Kalk entfernen",cat:"Reinigung"},
+{id:"r16",text:"Küche: Schränke innen, Fettfilm, Arbeitsflächen",cat:"Reinigung"},
+{id:"r17",text:"Böden: Fliesen wischen, Laminat reinigen, Teppich shampooen",cat:"Reinigung"},
+{id:"r18",text:"Keller/Abstellraum komplett räumen & fegen",cat:"Reinigung"},
+{id:"r19",text:"Alle Schlüssel zusammensuchen: Haustür, Wohnung, Keller, Briefkasten, Garage",cat:"Vertrag"},
+{id:"r20",text:"Briefkasten-Beschriftung Moltkestraße entfernen",cat:"Vertrag"},
+]},
+{id:"phase9",label:"Endspurt – Übergabe 30.06.",icon:"🔑",color:"var(--accent-rust)",soft:"var(--accent-rust-soft)",fill:"#b44d2d",dates:"Letzte Juni-Woche",
+hint:{text:"Alles raus, alles sauber! Übergabeprotokoll vorbereiten. Fotos VOR Übergabe als Beweissicherung. Kaution-Rückforderung direkt anstoßen.",type:"rust"},tasks:[
+{id:"e1",text:"Zählerstände: Strom, Gas, Wasser Moltkestraße zum 30.06. ablesen & fotografieren",cat:"Wohnung",deadline:"Am 30.06.!"},
+{id:"e2",text:"Strom Moltke: Endabrechnung/Abmeldung zum 30.06. bestätigen",cat:"Kündigung"},
+{id:"e3",text:"Gas Moltke: Endabrechnung/Abmeldung zum 30.06. bestätigen",cat:"Kündigung"},
+{id:"e4",text:"Internet Moltke: Endtermin bestätigen, Router zurücksenden (Retourenlabel!)",cat:"Kündigung"},
+{id:"e5",text:"Finaler Rundgang: Alles leer, sauber, renoviert?",cat:"Wohnung"},
+{id:"e6",text:"Fotos aller Räume VOR Übergabe als Beweissicherung",cat:"Wohnung",deadline:"Vor Übergabe!"},
+{id:"e7",text:"Übergabeprotokoll erstellen: Zustand Räume, Zählerstände, Mängel",cat:"Vertrag"},
+{id:"e8",text:"Übergabe mit Vermieter: Protokoll gemeinsam unterschreiben",cat:"Vertrag",deadline:"30.06.2026"},
+{id:"e9",text:"Alle Schlüssel übergeben – schriftliche Quittung verlangen!",cat:"Vertrag"},
+{id:"e10",text:"Kaution: Rückforderung schriftlich anstoßen (Vermieter hat max. 6 Monate)",cat:"Finanzen"},
+{id:"e11",text:"Nachsendeauftrag prüfen: Läuft noch? Ggf. verlängern (12 Monate empfohlen)",cat:"Behörden"},
+{id:"e12",text:"Nebenkostenabrechnung Moltke: Frist notieren (Vermieter hat 12 Monate)",cat:"Finanzen"},
+]},
+{id:"phase10",label:"Ummeldungen & Einleben",icon:"✅",color:"var(--accent-slate)",soft:"var(--accent-slate-soft)",fill:"#3d5467",dates:"Laufend",hint:null,tasks:[
+{id:"f1",text:"Amazon: Liefer- + Rechnungsadresse ändern",cat:"Online"},
+{id:"f2",text:"DHL Paketankündigung / Packstation: Adresse",cat:"Online"},
+{id:"f3",text:"Lieferando, Lieferservices: Adresse ändern",cat:"Online"},
+{id:"f4",text:"ImmobilienScout24: Mietgesuch deaktivieren",cat:"Online"},
+{id:"f5",text:"Google Maps: Privatadresse + Arbeitsadresse",cat:"Online"},
+{id:"f6",text:"Apple ID / Google Account: Adresse",cat:"Online"},
+{id:"f7",text:"Newsletter, Abo-Boxen, Zeitschriften: Adresse",cat:"Online"},
+{id:"f8",text:"Arzt & Zahnarzt: Ggf. neue Praxen suchen",cat:"Gesundheit"},
+{id:"f9",text:"Apotheke in der Nähe finden",cat:"Gesundheit"},
+{id:"f10",text:"Fitnessstudio: Adresse ändern oder neues Studio",cat:"Freizeit"},
+{id:"f11",text:"MTB-Strecken rund um den Wartberg erkunden 🚵",cat:"Freizeit"},
+{id:"f12",text:"Freunde & Familie: Neue Adresse mitteilen",cat:"Soziales"},
+{id:"f13",text:"Einweihungsparty planen 🎉",cat:"Soziales"},
+{id:"f14",text:"Mülltonnen: Welche Tonnen, Abholtermine, gelber Sack, Biomüll",cat:"Wohnung"},
+{id:"f15",text:"Hausverwaltung: Ansprechpartner, Hausordnung, Ruhezeiten",cat:"Wohnung"},
+{id:"f16",text:"Parkplatz / Anwohnerparken / Stellplatz klären",cat:"Wohnung"},
+{id:"f17",text:"Schlüsseldienst-Notfallnummer notieren",cat:"Wohnung"},
+{id:"f18",text:"Nächste Postfiliale & Briefkasten finden",cat:"Wohnung"},
+{id:"f19",text:"Supermärkte, Bäcker, Drogerie in der neuen Umgebung erkunden",cat:"Freizeit"},
+]}
+];
+
+var CAT_COLORS={Vertrag:["#c0392b","#fdecea"],Planung:["#2980b9","#e8f4fd"],Vorbereitung:["#8e44ad","#f3e8f9"],"Behörden":["#d35400","#fef0e6"],Versorger:["#16a085","#e6f7f3"],Versicherung:["#2c3e50","#eaeff3"],Finanzen:["#27ae60","#e8f8ee"],Packen:["#f39c12","#fef9eb"],Wohnung:["#1abc9c","#e6faf6"],"IT/Büro":["#3498db","#e8f2fd"],Umzug:["#e74c3c","#fdecec"],Business:["#0e6655","#e6f5f1"],Online:["#7d3c98","#f3eaf8"],Gesundheit:["#e84393","#fdeaf4"],Freizeit:["#00b894","#e6faf3"],Soziales:["#fd79a8","#feeaf2"],"Kündigung":["#922b21","#f9e0dd"],Renovierung:["#7d6608","#fdf5e0"],Entsorgung:["#616a6b","#eceff1"],Reinigung:["#2e86c1","#e8f4fd"]};
+var CATEGORIES=["Alle","Vertrag","Planung","Vorbereitung","Behörden","Versorger","Kündigung","Versicherung","Finanzen","Packen","Wohnung","IT/Büro","Umzug","Renovierung","Reinigung","Entsorgung","Business","Online","Gesundheit","Freizeit","Soziales"];
+
+var checked=load('umzug_v3_checked',{}),notes=load('umzug_v3_notes',{}),images=load('umzug_v3_images',{});
+var activeFilter="Alle",searchTerm="",openPhases={},currentNoteId=null;
+PHASES.forEach(function(p){openPhases[p.id]=true});
+
+function load(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function totalDone(){return Object.values(checked).filter(Boolean).length}
+function totalAll(){return PHASES.reduce(function(s,p){return s+p.tasks.length},0)}
+
+function updateProgress(){
+  var done=totalDone(),all=totalAll(),pct=all>0?(done/all)*100:0,circ=188.5;
+  document.getElementById('ringFill').style.strokeDashoffset=circ-(circ*pct/100);
+  document.getElementById('pctText').textContent=Math.round(pct)+'%';
+  document.getElementById('progressLabel').textContent=done+' von '+all+' erledigt';
+  document.getElementById('progressBar').style.width=pct+'%';
+  var sub=document.getElementById('progressSub');
+  if(pct===0)sub.textContent="Los geht's – Umzug am 02./03.05.!";
+  else if(pct<15)sub.textContent="Guter Start!";
+  else if(pct<30)sub.textContent="Läuft – weiter so!";
+  else if(pct<50)sub.textContent="Fast ein Drittel!";
+  else if(pct<70)sub.textContent="Über die Hälfte – stark!";
+  else if(pct<90)sub.textContent="Endspurt!";
+  else if(pct<100)sub.textContent="Nur noch "+Math.round(all-done)+" Punkte!";
+  else{sub.textContent="🎉 Willkommen in der Wartbergstraße!";launchConfetti()}
+}
+
+function toggleTask(id,e){if(e)e.stopPropagation();checked[id]=!checked[id];save('umzug_v3_checked',checked);render()}
+function togglePhase(phaseId){openPhases[phaseId]=!openPhases[phaseId];render()}
+function openNoteModal(id,e){if(e)e.stopPropagation();currentNoteId=id;document.getElementById('noteTextarea').value=notes[id]||'';var t=null;PHASES.forEach(function(p){p.tasks.forEach(function(tk){if(tk.id===id)t=tk})});document.getElementById('noteModalTitle').textContent='Notiz'+(t?' – '+t.text.substring(0,45)+'…':'');document.getElementById('noteModal').classList.add('active');setTimeout(function(){document.getElementById('noteTextarea').focus()},100)}
+function closeNoteModal(){document.getElementById('noteModal').classList.remove('active');currentNoteId=null}
+function saveNote(){var val=document.getElementById('noteTextarea').value.trim();if(val)notes[currentNoteId]=val;else delete notes[currentNoteId];save('umzug_v3_notes',notes);closeNoteModal();render()}
+function deleteNote(id,e){if(e)e.stopPropagation();delete notes[id];save('umzug_v3_notes',notes);render()}
+
+var imgTargetId=null;
+function triggerImageUpload(id,e){if(e)e.stopPropagation();imgTargetId=id;document.getElementById('imgUpload').click()}
+document.getElementById('imgUpload').addEventListener('change',function(e){
+  if(!imgTargetId)return;var files=e.target.files;if(!files.length)return;
+  if(!images[imgTargetId])images[imgTargetId]=[];
+  var remaining=files.length;
+  for(var i=0;i<files.length;i++){(function(file){var reader=new FileReader();reader.onload=function(ev){images[imgTargetId].push(ev.target.result);remaining--;if(remaining===0){save('umzug_v3_images',images);render()}};reader.readAsDataURL(file)})(files[i])}
+  e.target.value='';
+});
+function removeImage(taskId,idx,e){if(e)e.stopPropagation();if(images[taskId]){images[taskId].splice(idx,1);if(!images[taskId].length)delete images[taskId]}save('umzug_v3_images',images);render()}
+function openLightbox(src){document.getElementById('lightboxImg').src=src;document.getElementById('lightbox').classList.add('active')}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('active')}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}
+
+function render(){
+  updateProgress();
+  var container=document.getElementById('phaseList');container.innerHTML='';
+  PHASES.forEach(function(phase,pi){
+    var tasks=phase.tasks.filter(function(t){
+      var catOk=activeFilter==="Alle"||t.cat===activeFilter;
+      var searchOk=!searchTerm||t.text.toLowerCase().indexOf(searchTerm.toLowerCase())!==-1||(notes[t.id]||'').toLowerCase().indexOf(searchTerm.toLowerCase())!==-1;
+      return catOk&&searchOk});
+    if(!tasks.length)return;
+    var doneCount=tasks.filter(function(t){return checked[t.id]}).length;
+    var allDone=doneCount===tasks.length,isOpen=openPhases[phase.id];
+    var el=document.createElement('div');
+    el.className='phase'+(isOpen?' open':'')+(allDone?' done':'');
+    el.style.animationDelay=(pi*0.04)+'s';
+    var hintHTML='';
+    if(phase.hint&&isOpen)hintHTML='<div class="phase-hint '+(phase.hint.type||'')+'">'+phase.hint.text+'</div>';
+    var tasksHTML=tasks.map(function(t){
+      var done=checked[t.id],cc=CAT_COLORS[t.cat]||['#999','#f5f5f5'];
+      var dlHTML=t.deadline?'<span class="task-deadline">⏰ '+t.deadline+'</span>':'';
+      var noteHTML='';if(notes[t.id])noteHTML='<div class="task-note-display" onclick="event.stopPropagation()">'+escHtml(notes[t.id])+'<button class="note-del" onclick="deleteNote(\''+t.id+'\',event)" title="Löschen">✕</button></div>';
+      var imgsHTML='';if(images[t.id]&&images[t.id].length){imgsHTML='<div class="task-images" onclick="event.stopPropagation()">';images[t.id].forEach(function(src,idx){imgsHTML+='<div class="img-wrap"><img class="task-img-thumb" src="'+src+'" onclick="openLightbox(this.src)" alt="Bild"><button class="img-remove" onclick="removeImage(\''+t.id+'\','+idx+',event)">✕</button></div>'});imgsHTML+='</div>'}
+      var hasNote=!!notes[t.id],hasImg=images[t.id]&&images[t.id].length>0;
+      return '<div class="task'+(done?' checked':'')+'" onclick="toggleTask(\''+t.id+'\',event)"><div class="task-check"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7.5L5.5 10L11 4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-content"><div class="task-text">'+t.text+'</div><div class="task-meta"><span class="task-cat" style="background:'+cc[1]+';color:'+cc[0]+'">'+t.cat+'</span>'+dlHTML+'</div><div class="task-actions"><button class="task-action-btn" onclick="openNoteModal(\''+t.id+'\',event)">'+(hasNote?'✏️ Bearbeiten':'📝 Notiz')+'</button><button class="task-action-btn" onclick="triggerImageUpload(\''+t.id+'\',event)">📷 Foto'+(hasImg?' ('+images[t.id].length+')':'')+'</button></div>'+noteHTML+imgsHTML+'</div></div>'
+    }).join('');
+    el.innerHTML='<button class="phase-header" onclick="togglePhase(\''+phase.id+'\')"><div class="phase-header-left"><div class="phase-icon" style="background:'+phase.soft+'">'+phase.icon+'</div><div><div class="phase-title">'+phase.label+'</div><div class="phase-dates">'+phase.dates+'</div><div class="phase-count">'+doneCount+'/'+tasks.length+' erledigt'+(allDone?' ✅':'')+'</div></div></div><div class="phase-header-right"><div class="phase-mini-bar"><div class="phase-mini-bar-fill" style="width:'+((doneCount/tasks.length)*100)+'%;background:'+phase.fill+'"></div></div><span class="phase-chevron">▾</span></div></button><div class="phase-body">'+hintHTML+tasksHTML+'</div>';
+    container.appendChild(el);
+  });
+}
+
+function renderCatPills(){document.getElementById('catPills').innerHTML=CATEGORIES.map(function(c){return '<button class="cat-pill'+(activeFilter===c?' active':'')+'" onclick="setFilter(\''+c+'\')">'+c+'</button>'}).join('')}
+function setFilter(cat){activeFilter=cat;renderCatPills();render()}
+
+var searchInput=document.getElementById('searchInput'),searchBox=document.getElementById('searchBox');
+searchInput.addEventListener('input',function(){searchTerm=searchInput.value;searchBox.classList.toggle('has-value',!!searchTerm);render()});
+document.getElementById('searchClear').addEventListener('click',function(){searchInput.value='';searchTerm='';searchBox.classList.remove('has-value');render()});
+
+document.getElementById('resetBtn').addEventListener('click',function(){if(confirm('Alles zurücksetzen? (Häkchen, Notizen & Bilder)')){checked={};notes={};images={};save('umzug_v3_checked',checked);save('umzug_v3_notes',notes);save('umzug_v3_images',images);render()}});
+
+document.getElementById('exportBtn').addEventListener('click',function(){
+  var lines=['UMZUGS-CHECKLISTE – Stand: '+new Date().toLocaleDateString('de-DE'),'Moltkestraße 10 → Wartbergstraße 8.1, Heilbronn','Mietfrei bis 30.06.2026',''];
+  PHASES.forEach(function(phase){var done=phase.tasks.filter(function(t){return checked[t.id]}).length;lines.push('═══ '+phase.icon+' '+phase.label+' ('+done+'/'+phase.tasks.length+') ═══');phase.tasks.forEach(function(t){var mark=checked[t.id]?'✅':'☐';var dl=t.deadline?' ['+t.deadline+']':'';lines.push(mark+' '+t.text+dl);if(notes[t.id])lines.push('   📝 '+notes[t.id])});lines.push('')});
+  lines.push('Fortschritt: '+totalDone()+'/'+totalAll()+' ('+Math.round(totalDone()/totalAll()*100)+'%)');
+  navigator.clipboard.writeText(lines.join('\n')).then(function(){var btn=document.getElementById('exportBtn');btn.textContent='✅ Kopiert!';setTimeout(function(){btn.textContent='📋 Zusammenfassung kopieren'},2000)});
+});
+
+var confettiLaunched=false;
+function launchConfetti(){if(confettiLaunched)return;confettiLaunched=true;var colors=['#0d7c66','#c8963e','#1b3a4b','#6c3461','#e74c3c','#3498db','#27ae60'];for(var i=0;i<80;i++){var p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'vw';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.width=(4+Math.random()*8)+'px';p.style.height=(4+Math.random()*8)+'px';p.style.borderRadius=Math.random()>.5?'50%':'2px';p.style.animation='confettiFall '+(2+Math.random()*2)+'s ease-in '+(Math.random()*1.5)+'s forwards';document.body.appendChild(p);setTimeout(function(el){el.remove()},5000,p)}setTimeout(function(){confettiLaunched=false},6000)}
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeLightbox();closeNoteModal()}if(e.key==='Enter'&&document.getElementById('noteModal').classList.contains('active')&&e.ctrlKey)saveNote()});
+
+renderCatPills();render();
+</script>
+</body>
+</html>

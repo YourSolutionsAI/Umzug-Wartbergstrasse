@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Umzug Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f3f0;
+    --surface: #ffffff;
+    --surface-alt: #edeae6;
+    --ink: #1a1714;
+    --ink-soft: #6b6560;
+    --ink-muted: #a39e98;
+    --accent: #2d5a3d;
+    --accent-light: #e8f0eb;
+    --keep-bg: #dce8f0;
+    --keep-text: #1a3a5c;
+    --keep-border: #8ab4d4;
+    --sell-bg: #f0e6cf;
+    --sell-text: #6b4c1a;
+    --sell-border: #d4b878;
+    --give-bg: #d8eddf;
+    --give-text: #1a5c34;
+    --give-border: #7ac494;
+    --trash-bg: #f0d8d4;
+    --trash-text: #7a1a1a;
+    --trash-border: #d48a82;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 3px rgba(26,23,20,0.06);
+    --shadow-md: 0 4px 12px rgba(26,23,20,0.08);
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html {
+    font-size: 16px;
+    background: var(--bg);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 10px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, select, input { font-family: inherit; font-size: 16px; outline: none; }
+  button { cursor: pointer; border: none; background: none; }
+
+  /* ── Header ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding: 16px 4px 12px;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition);
+  }
+  .header.scrolled { border-bottom-color: var(--surface-alt); }
+
+  .header-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .header-pct {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .header-pct span {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    margin-left: 6px;
+    letter-spacing: 0;
+  }
+  .sync-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    padding: 4px 10px;
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .sync-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a39e98;
+    transition: background var(--transition);
+  }
+  .sync-dot.ok { background: #4caf6a; }
+  .sync-dot.live { background: #4caf6a; animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .progress-track {
+    height: 5px;
+    background: var(--surface-alt);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 20px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── User Toggle ── */
+  .user-toggle {
+    display: flex;
+    gap: 6px;
+    padding: 12px 4px 0;
+  }
+  .user-btn {
+    flex: 1;
+    padding: 13px 0;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1.5px solid transparent;
+    transition: all var(--transition);
+    min-height: 48px;
+  }
+  .user-btn.active {
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+    border-color: var(--ink);
+  }
+
+  /* ── Stat Cards ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 16px 4px;
+  }
+  @media (max-width: 360px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 6px;
+    text-align: center;
+    border: 1.5px solid transparent;
+    transition: all var(--transition);
+    cursor: pointer;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-card.active { border-color: var(--ink); transform: scale(0.97); }
+  .stat-card .num { font-size: 26px; font-weight: 700; line-height: 1; }
+  .stat-card .lbl { font-size: 11px; font-weight: 500; margin-top: 4px; opacity: 0.7; }
+
+  .stat-card[data-key="keep"] .num { color: var(--keep-text); }
+  .stat-card[data-key="sell"] .num { color: var(--sell-text); }
+  .stat-card[data-key="give"] .num { color: var(--give-text); }
+  .stat-card[data-key="trash"] .num { color: var(--trash-text); }
+
+  /* ── Filter Pills ── */
+  .filters {
+    display: flex;
+    gap: 6px;
+    padding: 0 4px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .pill {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    background: var(--surface);
+    color: var(--ink-soft);
+    border: 1px solid var(--surface-alt);
+    transition: all var(--transition);
+    min-height: 38px;
+  }
+  .pill.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── Rooms ── */
+  .room { margin-bottom: 6px; }
+
+  .room-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 12px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    cursor: pointer;
+    min-height: 52px;
+    transition: background var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+  .room-header:active { background: var(--surface-alt); }
+  .room-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .room-icon { font-size: 20px; flex-shrink: 0; }
+  .room-name { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .room-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .room-progress {
+    width: 40px;
+    height: 4px;
+    background: var(--surface-alt);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .room-progress-fill {
+    height: 100%;
+    border-radius: 20px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .room-progress-fill.done { background: #4caf6a; }
+  .room-count { font-size: 12px; color: var(--ink-muted); font-weight: 500; min-width: 32px; text-align: right; }
+  .room-chevron {
+    font-size: 10px;
+    color: var(--ink-muted);
+    transition: transform var(--transition);
+    margin-left: 2px;
+  }
+  .room-chevron.collapsed { transform: rotate(-90deg); }
+
+  /* ── Items ── */
+  .items { padding: 4px 0; }
+
+  .item {
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    margin: 3px 0;
+    transition: all var(--transition);
+    cursor: pointer;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .item:active { transform: scale(0.99); }
+  .item.decided-keep { background: var(--keep-bg); }
+  .item.decided-sell { background: var(--sell-bg); }
+  .item.decided-give { background: var(--give-bg); }
+  .item.decided-trash { background: var(--trash-bg); }
+  .item.open { background: transparent; }
+  .item.expanded { background: var(--surface); box-shadow: var(--shadow-md); border-radius: var(--radius); }
+
+  .item-info { flex: 1; min-width: 0; }
+  .item-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.35;
+  }
+  .item.decided-keep .item-name,
+  .item.decided-sell .item-name,
+  .item.decided-give .item-name,
+  .item.decided-trash .item-name { font-weight: 500; color: var(--ink); }
+
+  .item-meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .item-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 6px;
+    line-height: 1.5;
+  }
+  .badge-keep { background: var(--keep-bg); color: var(--keep-text); }
+  .badge-sell { background: var(--sell-bg); color: var(--sell-text); }
+  .badge-give { background: var(--give-bg); color: var(--give-text); }
+  .badge-trash { background: var(--trash-bg); color: var(--trash-text); }
+  .item-by { font-size: 11px; color: var(--ink-muted); }
+  .item-hint { font-size: 12px; color: var(--ink-muted); flex-shrink: 0; }
+  .item-icon-current { font-size: 18px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── Action Panel ── */
+  .actions {
+    padding: 10px 0 4px;
+  }
+  .action-row {
+    display: flex;
+    gap: 6px;
+  }
+  .action-btn {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: var(--surface);
+    border: 1.5px solid var(--surface-alt);
+    color: var(--ink-soft);
+    transition: all var(--transition);
+    overflow: hidden;
+  }
+  .action-btn:active { transform: scale(0.96); }
+  .action-btn .icon { font-size: 16px; }
+  .action-btn .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .action-btn.selected-keep { border-color: var(--keep-border); background: var(--keep-bg); color: var(--keep-text); }
+  .action-btn.selected-sell { border-color: var(--sell-border); background: var(--sell-bg); color: var(--sell-text); }
+  .action-btn.selected-give { border-color: var(--give-border); background: var(--give-bg); color: var(--give-text); }
+  .action-btn.selected-trash { border-color: var(--trash-border); background: var(--trash-bg); color: var(--trash-text); }
+
+  .secondary-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .btn-undo {
+    flex: 1;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--surface-alt);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all var(--transition);
+  }
+  .btn-delete {
+    height: 42px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--trash-border);
+    background: var(--trash-bg);
+    color: var(--trash-text);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 14px;
+    transition: all var(--transition);
+  }
+  .btn-delete.wide { flex: 1; }
+  .btn-close {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--surface-alt);
+    background: var(--surface);
+    color: var(--ink-muted);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition);
+  }
+
+  /* ── Add Section ── */
+  .add-section {
+    margin-top: 24px;
+    padding: 16px 12px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .add-title { font-size: 14px; font-weight: 600; color: var(--ink-soft); margin-bottom: 12px; }
+  .add-form { display: flex; flex-direction: column; gap: 8px; }
+  .add-select {
+    width: 100%;
+    padding: 12px 36px 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--surface-alt);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 500;
+    min-height: 48px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b6560' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+  .add-input-row { display: flex; gap: 8px; }
+  .add-input {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--surface-alt);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .add-input::placeholder { color: var(--ink-muted); }
+  .add-btn {
+    width: 52px;
+    min-height: 48px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition);
+  }
+  .add-btn:active { transform: scale(0.94); }
+
+  /* ── Loading ── */
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: var(--ink-muted);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--surface-alt);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading"><div class="spinner"></div>Verbinde mit Supabase…</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ── Config ──
+const SUPABASE_URL = 'https://ivhhayztdgpohvdnjjlt.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2aGhheXp0ZGdwb2h2ZG5qamx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjEyMTEsImV4cCI6MjA3NjUzNzIxMX0.NTtQ2p6WjcQEy_NMtnOlRYEVcqE55_kJ8oBh5lba7ns';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+const DECISIONS = {
+  keep:  { label: 'Mitnehmen',    icon: '✓', cssClass: 'keep' },
+  sell:  { label: 'Verkaufen',    icon: '€', cssClass: 'sell' },
+  give:  { label: 'Verschenken',  icon: '♥', cssClass: 'give' },
+  trash: { label: 'Entsorgen',    icon: '✕', cssClass: 'trash' },
+  open:  { label: 'Offen',        icon: '?', cssClass: 'open' },
+};
+
+const ROOMS = [
+  { name: 'Wohnzimmer', icon: '🛋️' },
+  { name: 'Küche', icon: '🍳' },
+  { name: 'Schlafzimmer', icon: '🛏️' },
+  { name: 'Bad', icon: '🚿' },
+  { name: 'Büro / Arbeitszimmer', icon: '💻' },
+  { name: 'Flur / Eingang', icon: '🚪' },
+  { name: 'Abstellraum / Keller', icon: '📦' },
+  { name: 'Kleidung (pro Person)', icon: '👕' },
+];
+
+const ROOM_MAP = {};
+ROOMS.forEach(r => ROOM_MAP[r.name] = r);
+
+// ── State ──
+let items = [];
+let currentUser = localStorage.getItem('umzug-user') || 'Jonas';
+let currentFilter = 'all';
+let collapsed = JSON.parse(localStorage.getItem('umzug-collapsed') || '{}');
+let expandedId = null;
+let addRoom = ROOMS[0].name;
+let addName = '';
+let syncStatus = 'connecting';
+
+// ── Supabase CRUD ──
+async function loadItems() {
+  const { data, error } = await sb.from('checklist_items').select('*').order('room').order('sort_order');
+  if (error) { console.error(error); syncStatus = 'error'; render(); return; }
+  items = data || [];
+  syncStatus = 'ok';
+  render();
+}
+
+async function updateItem(id, fields) {
+  const { error } = await sb.from('checklist_items').update(fields).eq('id', id);
+  if (error) { console.error(error); toast('Fehler beim Speichern'); return; }
+  const idx = items.findIndex(i => i.id === id);
+  if (idx >= 0) items[idx] = { ...items[idx], ...fields };
+  render();
+}
+
+async function insertItem(room, name) {
+  const roomItems = items.filter(i => i.room === room);
+  const maxSort = roomItems.reduce((m, i) => Math.max(m, i.sort_order || 0), 0);
+  const { data, error } = await sb.from('checklist_items')
+    .insert({ room, name, decision: 'open', sort_order: maxSort + 1 })
+    .select()
+    .single();
+  if (error) { console.error(error); toast('Fehler beim Hinzufügen'); return; }
+  items.push(data);
+  render();
+  toast(`"${name}" hinzugefügt`);
+}
+
+async function deleteItem(id) {
+  const item = items.find(i => i.id === id);
+  const { error } = await sb.from('checklist_items').delete().eq('id', id);
+  if (error) { console.error(error); toast('Fehler beim Löschen'); return; }
+  items = items.filter(i => i.id !== id);
+  expandedId = null;
+  render();
+  if (item) toast(`"${item.name}" gelöscht`);
+}
+
+// ── Realtime ──
+function setupRealtime() {
+  sb.channel('checklist-changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'checklist_items' }, (payload) => {
+      syncStatus = 'live';
+      if (payload.eventType === 'INSERT') {
+        if (!items.find(i => i.id === payload.new.id)) {
+          items.push(payload.new);
+          toast(`"${payload.new.name}" hinzugefügt (${payload.new.updated_by || '?'})`);
+        }
+      } else if (payload.eventType === 'UPDATE') {
+        const idx = items.findIndex(i => i.id === payload.new.id);
+        if (idx >= 0) {
+          const old = items[idx];
+          items[idx] = payload.new;
+          if (old.decision !== payload.new.decision && payload.new.updated_by !== currentUser) {
+            const d = DECISIONS[payload.new.decision];
+            toast(`${payload.new.updated_by}: "${payload.new.name}" → ${d.label}`);
+          }
+        }
+      } else if (payload.eventType === 'DELETE') {
+        items = items.filter(i => i.id !== payload.old.id);
+      }
+      render();
+      clearTimeout(window._liveTimer);
+      window._liveTimer = setTimeout(() => { syncStatus = 'ok'; render(); }, 3000);
+    })
+    .subscribe();
+}
+
+// ── Toast ──
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ── Render ──
+function render() {
+  const counts = { keep: 0, sell: 0, give: 0, trash: 0, open: 0 };
+  items.forEach(i => counts[i.decision]++);
+  const total = items.length;
+  const decided = total - counts.open;
+  const pct = total ? Math.round((decided / total) * 100) : 0;
+
+  const filtered = currentFilter === 'all' ? items : items.filter(i => i.decision === currentFilter);
+
+  let html = '';
+
+  // Header
+  html += `<div class="header" id="header">
+    <div class="header-top">
+      <div>
+        <div class="header-title">Fortschritt</div>
+        <div class="header-pct">${pct}%<span>${decided}/${total}</span></div>
+      </div>
+      <div class="sync-badge">
+        <span class="sync-dot ${syncStatus === 'live' ? 'live' : syncStatus === 'ok' ? 'ok' : ''}"></span>
+        ${syncStatus === 'live' ? 'Live' : syncStatus === 'ok' ? 'Sync' : syncStatus === 'connecting' ? '…' : 'Offline'}
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+  </div>`;
+
+  // User toggle
+  html += `<div class="user-toggle">
+    ${['Jonas', 'Jana'].map(u =>
+      `<button class="user-btn ${currentUser === u ? 'active' : ''}" onclick="setUser('${u}')">${u}</button>`
+    ).join('')}
+  </div>`;
+
+  // Stats
+  html += `<div class="stats">
+    ${['keep','sell','give','trash'].map(k => {
+      const d = DECISIONS[k];
+      return `<div class="stat-card ${currentFilter === k ? 'active' : ''}" data-key="${k}" onclick="toggleFilter('${k}')">
+        <div class="num">${counts[k]}</div>
+        <div class="lbl">${d.label}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+
+  // Filter pills
+  html += `<div class="filters">
+    <button class="pill ${currentFilter === 'all' ? 'active' : ''}" onclick="toggleFilter('all')">Alle</button>
+    ${Object.entries(DECISIONS).map(([k, d]) =>
+      `<button class="pill ${currentFilter === k ? 'active' : ''}" onclick="toggleFilter('${k}')">${d.label} (${counts[k]})</button>`
+    ).join('')}
+  </div>`;
+
+  // Rooms
+  ROOMS.forEach(room => {
+    const rFiltered = filtered.filter(i => i.room === room.name);
+    if (rFiltered.length === 0) return;
+    const rAll = items.filter(i => i.room === room.name);
+    const rDone = rAll.filter(i => i.decision !== 'open').length;
+    const rTotal = rAll.length;
+    const rPct = rTotal ? Math.round((rDone / rTotal) * 100) : 0;
+    const isCollapsed = collapsed[room.name];
+
+    html += `<div class="room">
+      <div class="room-header" onclick="toggleRoom('${room.name}')">
+        <div class="room-left">
+          <span class="room-icon">${room.icon}</span>
+          <span class="room-name">${room.name}</span>
+        </div>
+        <div class="room-right">
+          <div class="room-progress"><div class="room-progress-fill ${rPct === 100 ? 'done' : ''}" style="width:${rPct}%"></div></div>
+          <span class="room-count">${rDone}/${rTotal}</span>
+          <span class="room-chevron ${isCollapsed ? 'collapsed' : ''}">▼</span>
+        </div>
+      </div>`;
+
+    if (!isCollapsed) {
+      html += `<div class="items">`;
+      rFiltered.forEach(it => {
+        const d = DECISIONS[it.decision];
+        const isOpen = it.decision === 'open';
+        const isExpanded = expandedId === it.id;
+        const decidedClass = !isOpen ? `decided-${d.cssClass}` : 'open';
+
+        html += `<div>
+          <div class="item ${decidedClass} ${isExpanded ? 'expanded' : ''}" onclick="expandItem(${it.id})">
+            <div class="item-info">
+              <div class="item-name">${it.name}</div>
+              ${!isOpen ? `<div class="item-meta">
+                <span class="item-badge badge-${d.cssClass}">${d.label}</span>
+                ${it.updated_by ? `<span class="item-by">${it.updated_by}</span>` : ''}
+              </div>` : ''}
+            </div>
+            ${!isExpanded ? (isOpen
+              ? `<span class="item-hint">Tippen</span>`
+              : `<span class="item-icon-current" style="color:var(--${d.cssClass}-text)">${d.icon}</span>`)
+            : ''}
+          </div>`;
+
+        if (isExpanded) {
+          html += `<div class="actions">
+            <div class="action-row">
+              ${['keep','sell','give','trash'].map(k => {
+                const dd = DECISIONS[k];
+                return `<button class="action-btn ${it.decision === k ? 'selected-'+k : ''}" onclick="event.stopPropagation();decide(${it.id},'${k}')">
+                  <span class="icon">${dd.icon}</span>
+                  <span class="label">${dd.label}</span>
+                </button>`;
+              }).join('')}
+            </div>
+            <div class="secondary-row">
+              ${!isOpen ? `<button class="btn-undo" onclick="event.stopPropagation();decide(${it.id},'open')">↩ Zurücksetzen</button>` : ''}
+              <button class="btn-delete ${isOpen ? 'wide' : ''}" onclick="event.stopPropagation();removeItem(${it.id})">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                Löschen
+              </button>
+              <button class="btn-close" onclick="event.stopPropagation();expandItem(null)">✕</button>
+            </div>
+          </div>`;
+        }
+        html += `</div>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+  });
+
+  // Add section
+  html += `<div class="add-section">
+    <div class="add-title">Neuen Gegenstand hinzufügen</div>
+    <div class="add-form">
+      <select class="add-select" id="addRoom" onchange="addRoom=this.value">
+        ${ROOMS.map(r => `<option value="${r.name}" ${addRoom === r.name ? 'selected' : ''}>${r.icon} ${r.name}</option>`).join('')}
+      </select>
+      <div class="add-input-row">
+        <input class="add-input" id="addInput" placeholder="Gegenstand…" value="${addName}" oninput="addName=this.value" onkeydown="if(event.key==='Enter')addItem()">
+        <button class="add-btn" onclick="addItem()">+</button>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById('app').innerHTML = html;
+
+  // Restore scroll-aware header
+  requestAnimationFrame(() => {
+    const h = document.getElementById('header');
+    if (h) {
+      h.classList.toggle('scrolled', window.scrollY > 10);
+    }
+  });
+}
+
+// ── Actions ──
+window.setUser = function(u) {
+  currentUser = u;
+  localStorage.setItem('umzug-user', u);
+  render();
+};
+
+window.toggleFilter = function(f) {
+  currentFilter = currentFilter === f ? 'all' : f;
+  expandedId = null;
+  render();
+};
+
+window.toggleRoom = function(r) {
+  collapsed[r] = !collapsed[r];
+  localStorage.setItem('umzug-collapsed', JSON.stringify(collapsed));
+  render();
+};
+
+window.expandItem = function(id) {
+  expandedId = expandedId === id ? null : id;
+  render();
+};
+
+window.decide = function(id, key) {
+  const item = items.find(i => i.id === id);
+  const newKey = item && item.decision === key ? 'open' : key;
+  updateItem(id, { decision: newKey, updated_by: newKey === 'open' ? null : currentUser });
+  expandedId = null;
+};
+
+window.removeItem = function(id) {
+  deleteItem(id);
+};
+
+window.addItem = function() {
+  if (!addName.trim()) return;
+  insertItem(addRoom, addName.trim());
+  addName = '';
+  const inp = document.getElementById('addInput');
+  if (inp) inp.value = '';
+};
+
+// ── Scroll listener ──
+window.addEventListener('scroll', () => {
+  const h = document.getElementById('header');
+  if (h) h.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// ── Init ──
+(async () => {
+  await loadItems();
+  setupRealtime();
+})();
+</script>
+</body>
+</html>
